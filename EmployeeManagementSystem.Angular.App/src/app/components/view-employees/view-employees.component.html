@@ -1,0 +1,33 @@
+<table mat-table [dataSource]="employees">
+    <!-- Row for the names of people -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let employee"> 
+        <a>{{employee.name}}</a> 
+      </td>
+    </ng-container>
+
+     <!-- Dynamic Columns for Each Day -->
+  <ng-container *ngFor="let day of daysOfWeek" [matColumnDef]="day">
+    <th mat-header-cell *matHeaderCellDef> {{day}} </th>
+    <td mat-cell *matCellDef="let employee">
+      <div *ngIf="employee.shifts?.length > 0;">
+        <ul>
+            <li *ngFor="let shift of employee.shifts" (click)="editShift(shift, employee, day)" >
+              @if(shift.dayName === day) 
+              {
+                [{{shift.roleName}} {{getFormattedDate(shift.startTime)}} - {{getFormattedDate(shift.endTime)}}]
+              } 
+            </li>
+          <li> <button mat-button (click)="addShift(employee, day)">+</button> </li>
+        </ul>
+      </div>
+    
+    </td>
+  </ng-container>
+
+  <!-- Header and Rows -->
+  <tr mat-header-row *matHeaderRowDef="['name', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['name', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];"></tr>
+
+</table>

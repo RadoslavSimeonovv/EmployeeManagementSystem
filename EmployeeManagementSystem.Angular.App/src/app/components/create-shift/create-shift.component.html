@@ -1,0 +1,43 @@
+<h1>Create a new shift</h1>
+<br>
+<div class="container">
+    <mat-form-field appearance="outline" class="dropdown">
+      <mat-label>Select a role</mat-label>
+      <mat-select [(ngModel)]="shiftModel.roleId">
+        <mat-option *ngFor="let role of dropdownRoles" [value]="role.id">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field>
+      <mat-label>Start date time</mat-label>
+      <input matInput
+        [matTimepicker]="timepicker"
+        [(ngModel)]="shiftModel.startTime"
+        [ngModelOptions]="{updateOn: 'blur'}">
+      <mat-timepicker #timepicker/>
+      <mat-timepicker-toggle [for]="timepicker" matSuffix/>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field>
+      <mat-label>End date time</mat-label>
+      <input matInput
+        [matTimepicker]="timepicker2"
+        [(ngModel)]="shiftModel.endTime"
+        [ngModelOptions]="{updateOn: 'blur'}">
+      <mat-timepicker #timepicker2/>
+      <mat-timepicker-toggle [for]="timepicker2" matSuffix/>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="saveShift()">Save</button>
+</div>
+
+<br>
+@if(overlap) {
+<div>
+  Overlap between date times, try again
+</div>
+}
